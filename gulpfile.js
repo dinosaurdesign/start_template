@@ -60,6 +60,10 @@ gulp.task('scripts', function () {
 
 gulp.task('browsersync', function () {
     browsersync({
+        server: { // Определяем параметры сервера
+            baseDir: 'src' // Директория для сервера - app
+        },
+
         //proxy: "start template/src",
         notify: false
     });
