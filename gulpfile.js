@@ -60,7 +60,7 @@ gulp.task('scripts', function () {
 
 gulp.task('browsersync', function () {
     browsersync({
-        proxy: "start template/src",
+        //proxy: "start template/src",
         notify: false
     });
 });
