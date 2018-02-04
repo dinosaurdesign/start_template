@@ -52,7 +52,7 @@ gulp.task('sass', function () {// компиляция sass
 });
 
 gulp.task('scripts', function () {
-    return gulp.src([ path.src.libsjs,    ])
+    return gulp.src(path.src.libsjs)
         .pipe(concat('libs.min.js')) // Собираем их в кучу в новом файле libs.min.js
         .pipe(uglify()) // Сжимаем JS файл
         .pipe(gulp.dest(path.src.libsdest)); // Выгружаем в папку app/js
@@ -63,7 +63,6 @@ gulp.task('browsersync', function () {
         server: { // Определяем параметры сервера
             baseDir: 'src' // Директория для сервера - app
         },
-
         //proxy: "start template/src",
         notify: false
     });
