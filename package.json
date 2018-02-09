@@ -1,5 +1,5 @@
 {
-  "name": "domino",
+  "name": "start_env",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,5 +19,6 @@
     "gulp-watch": "^5.0.0",
     "imagemin-pngquant": "^5.0.1"
   },
-  "author": "Alexander Kulnyow <alexanderkulnyow@yahoo.com>"
+  "author": "Alexander Kulnyow <alexanderkulnyow@yahoo.com>",
+  "devDependencies": {}
 }
