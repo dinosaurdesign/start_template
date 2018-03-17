@@ -1,4 +1,4 @@
-.idea
-node_modules/
-dist/
-Новая папка/
+.idea/
+env/package-lock.json
+src/libs/css/
+env/node_modules

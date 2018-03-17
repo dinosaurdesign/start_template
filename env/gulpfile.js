@@ -15,7 +15,7 @@ var
     cache           = require('gulp-cache'); // Подключаем библиотеку кеширования
 //переменные путей
 
-var dir             = 'src',
+var dir             = '../src',
     path = {
     src: {
         pug:        dir+'/pug/pages',  //
@@ -31,14 +31,14 @@ var dir             = 'src',
         libsdest:   dir+'/libs'
     },
     dist: {
-        libs: '',
+        libs: dir+'',
         folders: 'dist',
-        php: 'dist',
-        html: 'dist',
-        css: 'dist/css',
-        js: 'dist/js',
-        img: 'dist/img',
-        fonts: 'dist/fonts'
+        php: dir+'dist',
+        html: dir+'dist',
+        css: dir+'dist/css',
+        js: dir+'dist/js',
+        img: dir+'dist/img',
+        fonts: dir+'dist/fonts'
     }
 };
 // tasks
@@ -64,7 +64,7 @@ gulp.task('scripts', function () {
 gulp.task('browsersync', function () {
     browsersync({
         server: { // Определяем параметры сервера
-            baseDir: 'src' // Директория для сервера
+            baseDir: dir // Директория для сервера
         },
         //proxy: "start template/src",  //при запуска с open server
         notify: false
