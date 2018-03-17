@@ -51,7 +51,7 @@ gulp.task('sass', function () {
         .pipe(nano())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.src.css)) // Выгружаем результата в папку
-        .pipe(browsersync.reload({stream: true})) // Обновляем CSS на странице при изменении
+        .pipe(browsersync.reload({stream: true})); // Обновляем CSS на странице при изменении
 });
 // js
 gulp.task('scripts', function () {
@@ -95,15 +95,15 @@ gulp.task('clean', function () {
 });
 // выгружаем скомпилированный проект в продакшен
 gulp.task('build', ['clean', 'img', 'sass'], function () {
-    var buildCss = gulp.src(path.src.css)
+    var buildCss = gulp.src(path.src.css),
+        buildFonts = gulp.src(path.src.fonts), // Переносим шрифты в продакшен
+        buildJs = gulp.src(path.src.js), // Переносим скрипты в продакшен
+        buildHtml = gulp.src(path.src.html), // Переносим HTML в продакшен
+        buildPHP = gulp.src(path.src.php) // Переносим PHP в продакшен
         .pipe(gulp.dest(path.dist.css))
-    var buildFonts = gulp.src(path.src.fonts) // Переносим шрифты в продакшен
         .pipe(gulp.dest(path.dist.fonts))
-    var buildJs = gulp.src(path.src.js) // Переносим скрипты в продакшен
         .pipe(gulp.dest(path.dist.js))
-    var buildHtml = gulp.src(path.src.html) // Переносим HTML в продакшен
-        .pipe(gulp.dest(path.dist.html));
-    var buildPHP = gulp.src(path.src.php) // Переносим PHP в продакшен
+        .pipe(gulp.dest(path.dist.html))
         .pipe(gulp.dest(path.dist.php));
 });
 // отмечаем скрипт по умолчанию
