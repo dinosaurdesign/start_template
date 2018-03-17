@@ -14,19 +14,21 @@ var
     rename          = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     cache           = require('gulp-cache'); // Подключаем библиотеку кеширования
 //переменные путей
-var path = {
+
+var dir             = 'src',
+    path = {
     src: {
-        pug:        'src/pug/pages',  //
-        html:       'src/*.html',
-        css:        'src/css/',
-        sass:       'src/sass/**/*.*',
-        js:         'src/js/**/*.*',
-        php:        'src/**/*.php',
-        img:        'src/img/**/*.*',
-        fonts:      'src/fonts/**/*.*',
-        libsjs:     'src/libs/js/**/*.*',
-        libscss:    'src/libs/css/**/*.*',
-        libsdest:   'src/libs'
+        pug:        dir+'/pug/pages',  //
+        html:       dir+'/*.html',
+        css:        dir+'/css/',
+        sass:       dir+'/sass/**/*.*',
+        js:         dir+'/js/**/*.*',
+        php:        dir+'/**/*.php',
+        img:        dir+'/img/**/*.*',
+        fonts:      dir+'/fonts/**/*.*',
+        libsjs:     dir+'/libs/js/**/*.*',
+        libscss:    dir+'/libs/css/**/*.*',
+        libsdest:   dir+'/libs'
     },
     dist: {
         libs: '',
