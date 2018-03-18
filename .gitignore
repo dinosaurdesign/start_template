@@ -1,4 +1,4 @@
 .idea/
 env/package-lock.json
-src/libs/css/
+src/libs/
 env/node_modules
