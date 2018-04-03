@@ -12,9 +12,10 @@ var
     pngquant        = require('imagemin-pngquant'), // Подключаем библиотеку для работы с png
     del             = require('del'), // Подключаем библиотеку для удаления файлов и папок
     rename          = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
-    cache           = require('gulp-cache'); // Подключаем библиотеку кеширования
-//переменные путей
+    cache           = require('gulp-cache'), // Подключаем библиотеку кеширования
+    pug             = require('pug');
 
+//переменные путей
 var dir             = '../src',
     path = {
     src: {
@@ -41,7 +42,14 @@ var dir             = '../src',
         fonts: dir+'dist/fonts'
     }
 };
+
 // tasks
+//pug
+gulp.task('pug', function buildHTML() {
+    return gulp.src(path.src.pug)
+        .pipe(pug())
+        .pipe(gulp.dest(path.src.pug));
+});
 // компиляция sass
 gulp.task('sass', function () {
     return gulp.src(path.src.sass) // Берем источник
@@ -63,10 +71,14 @@ gulp.task('scripts', function () {
 //перезагрзка страницы
 gulp.task('browsersync', function () {
     browsersync({
-        server: { // Определяем параметры сервера
-            baseDir: dir // Директория для сервера
-        },
-        //proxy: "start template/src",  //при запуска с open server
+        server: { baseDir: dir },// Директория для сервера
+        // proxy: "http://example.com/", // проксирование вашего удаленного сервера, не важно на чем back-end
+        // logPrefix: 'example.com', // префикс для лога bs, маловажная настройка
+        //host:      'http://172.28.12.222/', // можно использовать ip сервера
+        // port:      3000, // порт через который будет проксироваться сервер
+        // open: 'external', // указываем, что наш url внешний
+        // ghost:     true,
+        // files:     [/*массив с путями к файлам и папкам за которыми вам нужно следить*/]
         notify: false
     });
 });
