@@ -3,7 +3,7 @@ var
     sass            = require('gulp-sass'), // препроцессор sass
     autoprefixer    = require('gulp-autoprefixer'), // вендорные префексы css
     sourcemaps      = require('gulp-sourcemaps'), // создание sourcemap
-    nano            = require('gulp-cssnano'), // жатие стилей
+    nano            = require('gulp-clean-css'), // жатие стилей
     uglify          = require('gulp-uglifyjs'), // Подключаем gulp-uglifyjs (для сжатия JS)
     concat          = require('gulp-concat'), //конкатинация
     browsersync     = require('browser-sync'),  // перезагрузка страницы браузера при изменении файлов
@@ -46,8 +46,8 @@ var dir             = '../src',
 gulp.task('sass', function () {
     return gulp.src(path.src.sass) // Берем источник
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
-        .pipe(sourcemaps.init())
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true})) // Создаем префиксы
+        .pipe(sourcemaps.init())
         .pipe(nano())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.src.css)) // Выгружаем результата в папку
