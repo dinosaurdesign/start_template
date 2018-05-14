@@ -9,5 +9,5 @@ $(document).ready(function(){
     }
     classFunction();
     $(window).resize(classFunction);
-})
+});
 

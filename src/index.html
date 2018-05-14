@@ -7,10 +7,12 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <!--preload fonts-->
+        <link type="text/plain" rel="author" href="http://domain/humans.txt" />
         <link rel="manifest" href="site.webmanifest">
         <link rel="apple-touch-icon" href="icon.png">
         <!-- Place favicon.ico in the root directory -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="preload" href="fonts/segoeiu/SegoeUIRegular/SegoeUIRegular.woff" as="font" type="font/woff" crossorigin>
     </head>
     <body>
         <header>
@@ -28,7 +30,7 @@
         </footer>
 
         <!--Scripts-->
-        <script src="libs/js/modernizr-3.5.0.min.js"></script>
+        <script src="libs/modernizr-3.5.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous">

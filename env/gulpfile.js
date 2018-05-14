@@ -4,6 +4,7 @@ var
     autoprefixer    = require('gulp-autoprefixer'), // вендорные префексы css
     sourcemaps      = require('gulp-sourcemaps'), // создание sourcemap
     nano            = require('gulp-clean-css'), // жатие стилей
+    babel           = require('gulp-babel'), //подключаем babel
     uglify          = require('gulp-uglifyjs'), // Подключаем gulp-uglifyjs (для сжатия JS)
     concat          = require('gulp-concat'), //конкатинация
     browsersync     = require('browser-sync'),  // перезагрузка страницы браузера при изменении файлов
@@ -24,6 +25,7 @@ var dir             = '../src',
         css:        dir+'/css/',
         sass:       dir+'/sass/**/*.*',
         js:         dir+'/js/**/*.*',
+        jsdest:     dir+'/js/dist/app.js',
         php:        dir+'/**/*.php',
         img:        dir+'/img/**/*.*',
         fonts:      dir+'/fonts/**/*.*',
@@ -62,11 +64,15 @@ gulp.task('sass', function () {
         .pipe(browsersync.reload({stream: true})); // Обновляем CSS на странице при изменении
 });
 // js
-gulp.task('scripts', function () {
-    return gulp.src(path.src.libsjs)
-        .pipe(concat('libs.min.js')) // Собираем их в кучу в новом файле libs.min.js
-        .pipe(uglify()) // Сжимаем JS файл
-        .pipe(gulp.dest(path.src.libsdest)); // Выгружаем в папку app/js
+gulp.task('babel', function () {
+    gulp.src(path.src.js)
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['babel-preset-env']
+        }))
+        .pipe(concat('all.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.src.jsdest)); // Выгружаем в папку app/js
 });
 //перезагрзка страницы
 gulp.task('browsersync', function () {
