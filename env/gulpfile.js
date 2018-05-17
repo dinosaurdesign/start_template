@@ -11,38 +11,38 @@ var
     watch           = require('gulp-watch'), // наблюдение за ихменением файлов
     imagemin        = require('gulp-imagemin'), // Подключаем библиотеку для работы с изображениями
     pngquant        = require('imagemin-pngquant'), // Подключаем библиотеку для работы с png
-    del             = require('del'), // Подключаем библиотеку для удаления файлов и папок
+    clean             = require('gulp-clean'), // Удаление папок и файлов
     rename          = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     cache           = require('gulp-cache'), // Подключаем библиотеку кеширования
     pug             = require('pug');
 
 //переменные путей
-var dir             = '../src',
+var dir             = '../',
     path = {
-    src: {
-        pug:        dir+'/pug/pages',  //
-        html:       dir+'/*.html',
-        css:        dir+'/css/',
-        sass:       dir+'/sass/**/*.*',
-        js:         dir+'/js/**/*.*',
-        jsdest:     dir+'/js/dist/app.js',
-        php:        dir+'/**/*.php',
-        img:        dir+'/img/**/*.*',
-        fonts:      dir+'/fonts/**/*.*',
-        libsjs:     dir+'/libs/js/**/*.*',
-        libscss:    dir+'/libs/css/**/*.*',
-        libsdest:   dir+'/libs'
-    },
-    dist: {
-        libs: dir+'',
-        folders: 'dist',
-        php: dir+'dist',
-        html: dir+'dist',
-        css: dir+'dist/css',
-        js: dir+'dist/js',
-        img: dir+'dist/img',
-        fonts: dir+'dist/fonts'
-    }
+        src: {
+            pug:        dir+'/src/pug/pages',  //
+            html:       dir+'/src/*.*',
+            css:        dir+'/src/css/',
+            sass:       dir+'/src/sass/**/*.*',
+            js:         dir+'/src/js/**/*.*',
+            jsdest:     dir+'/src/js/dist/app.js',
+            php:        dir+'/src/**/*.php',
+            img:        dir+'/src/img/**/*.*',
+            fonts:      dir+'/src/fonts/**/*.*',
+            folder:     dir+'/src/',
+            libsjs:     dir+'/src/libs/**/*.js',
+            libscss:    dir+'/src/libs/css/**/*.*',
+            libsdest:   dir+'/src/libs'
+        },
+        dist: {
+            libs:       dir+'/dist/libs/',
+            clean:      dir+'/dist/',
+            folder:     dir+'/dist/',
+            css:        dir+'/dist/css/',
+            js:         dir+'/dist/js/',
+            img:        dir+'dist/img',
+            fonts:      dir+'dist/fonts'
+        }
 };
 
 // tasks
@@ -74,6 +74,39 @@ gulp.task('babel', function () {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.src.jsdest)); // Выгружаем в папку app/js
 });
+
+//работа с изображениями
+gulp.task('img', function () {
+    return gulp.src(path.src.img) // Берем все изображения из app
+        .pipe(imagemin({
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest(path.dist.img)); // Выгружаем на продакшен
+});
+//очистка папки перед билдом
+gulp.task('clean', function() {
+    return gulp.src(path.dist.clean)               // выберае папку
+        .pipe(clean({force: true}));                     // очистка
+});
+// выгружаем скомпилированный проект в продакшен
+gulp.task('build', ['clean', 'img', 'sass'], function () {
+    gulp.src(path.src.css+'**/*.css')  //css
+        .pipe(gulp.dest(path.dist.css));
+    gulp.src(path.src.fonts)            // fonts
+        .pipe(gulp.dest(path.dist.fonts));
+    gulp.src(path.src.js)               //js
+        .pipe(gulp.dest(path.dist.js));
+    gulp.src(path.src.libsjs)               //jslibs
+        .pipe(gulp.dest(path.dist.libs));
+    gulp.src(path.src.img)               //img
+        .pipe(gulp.dest(path.dist.img));
+    gulp.src(path.src.html)               //folder
+        .pipe(gulp.dest(path.dist.folder));
+});
+
 //перезагрзка страницы
 gulp.task('browsersync', function () {
     browsersync({
@@ -95,34 +128,6 @@ gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
     gulp.watch(path.src.php, browsersync.reload); // Наблюдение за php файлами в корне проекта
     gulp.watch(path.src.js, browsersync.reload); // Наблюдение за js файлами в корне проекта
     gulp.watch(path.src.libsjs, browsersync.reload); // Наблюдение за js библиотеками в корне проекта
-});
-//работа с изображениями
-gulp.task('img', function () {
-    return gulp.src(path.src.img) // Берем все изображения из app
-        .pipe(imagemin({
-            interlaced: true,
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-        .pipe(gulp.dest(path.dist.img)); // Выгружаем на продакшен
-});
-//очистка папки перед билдом
-gulp.task('clean', function () {
-    return del.sync(path.dist.folders); // Удаляем папку dist перед сборкой
-});
-// выгружаем скомпилированный проект в продакшен
-gulp.task('build', ['clean', 'img', 'sass'], function () {
-    var buildCss = gulp.src(path.src.css),
-        buildFonts = gulp.src(path.src.fonts), // Переносим шрифты в продакшен
-        buildJs = gulp.src(path.src.js), // Переносим скрипты в продакшен
-        buildHtml = gulp.src(path.src.html), // Переносим HTML в продакшен
-        buildPHP = gulp.src(path.src.php) // Переносим PHP в продакшен
-        .pipe(gulp.dest(path.dist.css))
-        .pipe(gulp.dest(path.dist.fonts))
-        .pipe(gulp.dest(path.dist.js))
-        .pipe(gulp.dest(path.dist.html))
-        .pipe(gulp.dest(path.dist.php));
 });
 // отмечаем скрипт по умолчанию
 gulp.task('default', ['watch']);

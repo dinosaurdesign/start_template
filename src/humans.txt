@@ -2,13 +2,12 @@
 # The humans responsible & technology colophon
 
 /* TEAM */
-
     Front-end: Alexander Kulnyow
     e-mail: alexanderkulnyow@yahoo.com
     From: Vitebsk, Belarus.
     https://dds.by/
 
-    Web designer: Alexandra Betsenia
+    Web designer: Alexandra Betsnia
     e-mail: albetenya@gmail.com
     From: Vitebsk, Belarus.
 
@@ -20,4 +19,4 @@
 	Standards: CSS3, HTML5
 	Components: Apache Server Configs, jQuery, Modernizr, Normalize.css
 	Doctype: HTML5
-	Software: Phpstorm, FileZilla, Photoshop
+	Software: Phpstorm, Adobe XD, Photoshop
