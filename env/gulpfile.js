@@ -46,6 +46,20 @@ var dir             = '../',
 };
 
 // tasks
+//перезагрзка страницы
+gulp.task('browsersync', function () {
+    browsersync({
+        server: { baseDir: dir+'/src/' },// Директория для сервера
+        // proxy: "http://example.com/", // проксирование вашего удаленного сервера, не важно на чем back-end
+        // logPrefix: 'example.com', // префикс для лога bs, маловажная настройка
+        //host:      'http://172.28.12.222/', // можно использовать ip сервера
+        // port:      3000, // порт через который будет проксироваться сервер
+        // open: 'external', // указываем, что наш url внешний
+        // ghost:     true,
+        // files:     [/*массив с путями к файлам и папкам за которыми вам нужно следить*/]
+        notify: false
+    });
+});
 //pug
 gulp.task('pug', function buildHTML() {
     return gulp.src(path.src.pug)
@@ -64,12 +78,12 @@ gulp.task('sass', function () {
         .pipe(browsersync.reload({stream: true})); // Обновляем CSS на странице при изменении
 });
 // js
-gulp.task('babel', function () {
+gulp.task('scripts', function () {
     gulp.src(path.src.js)
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['babel-preset-env']
-        }))
+        // .pipe(babel({
+        //     presets: ['babel-preset-env']
+        // }))
         .pipe(concat('all.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.src.jsdest)); // Выгружаем в папку app/js
@@ -107,20 +121,7 @@ gulp.task('build', ['clean', 'img', 'sass'], function () {
         .pipe(gulp.dest(path.dist.folder));
 });
 
-//перезагрзка страницы
-gulp.task('browsersync', function () {
-    browsersync({
-        server: { baseDir: dir },// Директория для сервера
-        // proxy: "http://example.com/", // проксирование вашего удаленного сервера, не важно на чем back-end
-        // logPrefix: 'example.com', // префикс для лога bs, маловажная настройка
-        //host:      'http://172.28.12.222/', // можно использовать ip сервера
-        // port:      3000, // порт через который будет проксироваться сервер
-        // open: 'external', // указываем, что наш url внешний
-        // ghost:     true,
-        // files:     [/*массив с путями к файлам и папкам за которыми вам нужно следить*/]
-        notify: false
-    });
-});
+
 // наблюдение за изменением файлов
 gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
     gulp.watch(path.src.sass, ['sass']); // Наблюдение за sass файлами в папке sass
