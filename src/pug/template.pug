@@ -1,8 +1,18 @@
-- var title = "On Dogs: Man's Best Friend";
-- var author = "enlore";
-- var theGreat = "<span>escape!</span>";
-
-h1= title
-p Written with love by #{author}
-p This will be safe: #{theGreat}
-p for what it worth #{author}
+doctype html
+html(lang="en")
+    head
+        title= pageTitle
+        script(type='text/javascript').
+            if (foo) bar(1 + 5)
+    body
+        .container-fluid
+            .row
+                h1 Pug - node template engine
+                section.col-xs-12
+                    if youAreUsingPug
+                        p You are amazing
+                    else
+                        p Get on it!
+                    p.
+                        Pug is a terse and simple templating language with a
+                        strong focus on performance and powerful features.

@@ -14,13 +14,14 @@ var
     clean             = require('gulp-clean'), // Удаление папок и файлов
     rename          = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     cache           = require('gulp-cache'), // Подключаем библиотеку кеширования
-    pug             = require('pug');
+    pug             = require('gulp-pug');
 
 //переменные путей
 var dir             = '../',
     path = {
         src: {
-            pug:        dir+'/src/pug/pages',  //
+            pugsrc:        dir+'/src/pug/*.pug',  //
+            pugdst:        dir+'/src/pug/',  //
             html:       dir+'/src/*.*',
             css:        dir+'/src/css/',
             sass:       dir+'/src/sass/**/*.*',
@@ -62,9 +63,12 @@ gulp.task('browsersync', function () {
 });
 //pug
 gulp.task('pug', function buildHTML() {
-    return gulp.src(path.src.pug)
-        .pipe(pug())
-        .pipe(gulp.dest(path.src.pug));
+    return gulp.src(path.src.pugsrc)
+        .pipe(pug({
+                pretty: true
+            }
+        ))
+        .pipe(gulp.dest(path.src.pugdst))
 });
 // компиляция sass
 gulp.task('sass', function () {
