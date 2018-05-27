@@ -20,8 +20,8 @@ var
 var dir             = '../',
     path = {
         src: {
-            pugsrc:        dir+'/src/pug/*.pug',  //
-            pugdst:        dir+'/src/pug/',  //
+            pugsrc:     dir+'/src/pug/*.pug',  //
+            pugdst:     dir+'/src/pug/',  //
             html:       dir+'/src/*.*',
             css:        dir+'/src/css/',
             sass:       dir+'/src/sass/**/*.*',
@@ -62,14 +62,7 @@ gulp.task('browsersync', function () {
     });
 });
 //pug
-gulp.task('pug', function buildHTML() {
-    return gulp.src(path.src.pugsrc)
-        .pipe(pug({
-                pretty: true //отключение минификации
-            }
-        ))
-        .pipe(gulp.dest(path.src.pugdst))
-});
+
 // компиляция sass
 gulp.task('sass', function () {
     return gulp.src(path.src.sass) // Берем источник
@@ -134,5 +127,36 @@ gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
     gulp.watch(path.src.js, browsersync.reload); // Наблюдение за js файлами в корне проекта
     gulp.watch(path.src.libsjs, browsersync.reload); // Наблюдение за js библиотеками в корне проекта
 });
+
+
+
+
+
+
+// PUG Section
+gulp.task('pug', function buildHTML() {
+    return gulp.src(path.src.pugsrc)
+        .pipe(pug({
+                pretty: true //отключение минификации
+            }
+        ))
+        .pipe(gulp.dest(path.src.pugdst))
+        .pipe(browsersync.reload({stream: true})); // Обновляем CSS на странице при изменении
+
+});
+
+gulp.task('browsersyncpug', function () {
+    browsersync({
+        server: { baseDir: dir+'src/pug/' },// Директория для сервера
+        notify: false
+    });
+});
+gulp.task('watch-pug', ['pug', 'sass', 'browsersyncpug'], function () {
+    gulp.watch(path.src.pugsrc, ['pug']); // Наблюдение за pug файлами в корне проекта
+    gulp.watch(path.src.sass, ['sass']); // Наблюдение за sass файлами в папке sass
+    gulp.watch(path.src.js, browsersync.reload); // Наблюдение за js файлами в корне проекта
+    gulp.watch(path.src.libsjs, browsersync.reload); // Наблюдение за js библиотеками в корне проекта
+});
+
 // отмечаем скрипт по умолчанию
 gulp.task('default', ['watch']);
