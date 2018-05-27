@@ -65,7 +65,7 @@ gulp.task('browsersync', function () {
 gulp.task('pug', function buildHTML() {
     return gulp.src(path.src.pugsrc)
         .pipe(pug({
-                pretty: true
+                pretty: true //отключение минификации
             }
         ))
         .pipe(gulp.dest(path.src.pugdst))
