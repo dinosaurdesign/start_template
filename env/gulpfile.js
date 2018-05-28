@@ -128,11 +128,6 @@ gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
     gulp.watch(path.src.libsjs, browsersync.reload); // Наблюдение за js библиотеками в корне проекта
 });
 
-
-
-
-
-
 // PUG Section
 gulp.task('pug', function buildHTML() {
     return gulp.src(path.src.pugsrc)
