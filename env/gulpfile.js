@@ -14,7 +14,8 @@ var
     clean             = require('gulp-clean'), // Удаление папок и файлов
     rename          = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     cache           = require('gulp-cache'), // Подключаем библиотеку кеширования
-    pug             = require('gulp-pug');
+    pug             = require('gulp-pug'),
+    plumber = require('gulp-plumber');
 
 //переменные путей
 var dir             = '../',
@@ -66,6 +67,7 @@ gulp.task('browsersync', function () {
 // компиляция sass
 gulp.task('sass', function () {
     return gulp.src(path.src.sass) // Берем источник
+        .pipe(plumber())
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true})) // Создаем префиксы
         .pipe(sourcemaps.init())
@@ -118,7 +120,6 @@ gulp.task('build', ['clean', 'img', 'sass'], function () {
         .pipe(gulp.dest(path.dist.folder));
 });
 
-
 // наблюдение за изменением файлов
 gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
     gulp.watch(path.src.sass, ['sass']); // Наблюдение за sass файлами в папке sass
@@ -131,6 +132,7 @@ gulp.task('watch', ['browsersync', 'sass', 'scripts'], function () {
 // PUG Section
 gulp.task('pug', function buildHTML() {
     return gulp.src(path.src.pugsrc)
+        .pipe(plumber())
         .pipe(pug({
                 pretty: true //отключение минификации
             }
